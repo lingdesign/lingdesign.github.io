@@ -382,11 +382,10 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .frame.stat b{font-family:var(--display);font-weight:400;font-size:36cqw;line-height:.9;letter-spacing:-.02em}
 .frame.stat span{font-size:clamp(14px, 5.2cqw, 20px);line-height:1.35;max-width:16em;text-wrap:balance}
 /* desktop and phone in one layout, the phone overlapping the corner */
-.combo{--cw:92cqw;position:relative;width:var(--cw);aspect-ratio:16 / 12}
-.combo-web{position:absolute;left:0;top:4%;width:86%;height:auto;border-radius:calc(var(--cw) * .02);
-  box-shadow:0 calc(var(--cw) * .03) calc(var(--cw) * .08) rgba(104,92,214,.22),0 2px 6px rgba(104,92,214,.08)}
-.combo .phone{--w:calc(var(--cw) * .27);position:absolute;right:0;bottom:0}
-.combo .phone img{aspect-ratio:auto}
+/* payment story: sign-up, a first message to the dietitian, then the redesigned payment step at the end */
+.pay{position:relative;width:100cqw;height:100cqh;container-type:size;display:flex;align-items:center;justify-content:center;gap:3cqw}
+.pay .phone{--w:min(28cqw, 38cqh)}
+.pay .phone img{aspect-ratio:464 / 1022;object-fit:cover}
 /* a photo placeholder until the photo arrives */
 .ph-photo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-2);width:100%;height:100%;text-align:center;padding:0 12%;box-sizing:border-box}
 /* frame marks: three small circles, one per frame; the current one is solid */
@@ -432,7 +431,9 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
   height:min(100cqh, 125cqw);aspect-ratio:4 / 5;border-radius:20px;padding:0 6%;box-sizing:border-box;color:#E7E4F1;background:#3B58BE url(assets/spotlight/stat-bg.webp) center / cover}
 .sv-stage .stat b{font-family:var(--display);font-weight:400;font-size:min(30cqh, 38cqw);line-height:.9}
 .sv-stage .stat span{font-size:var(--fs-lead);line-height:1.35;max-width:14em}
-.sv-stage .combo{--cw:min(100cqw, 133cqh)}
+.sv-stage .pay{width:var(--pw, min(100cqw, 133cqh));height:auto;aspect-ratio:4 / 3;border-radius:12px;background:#E7E4FA url(assets/goals/cover-bg.webp) center / cover}
+.sv-stage .pay{container-type:normal;--pw:min(100cqw, 133cqh)}   /* sized from the viewer's stage, three phones across */
+.sv-stage .pay .phone{--w:calc(var(--pw) * .27)}
 .sv-stage .phone{--w:min(46cqw, 44cqh)}
 .sv-stage .ph-photo{width:min(100cqw, 80cqh);height:auto;aspect-ratio:4 / 5;border-radius:20px;background:#E9E6F3;color:#17151F}
 .sv-nav{position:absolute;top:50%;z-index:2;width:48px;height:48px;margin-top:-24px;border-radius:50%;border:0;cursor:pointer;
@@ -471,9 +472,13 @@ html.sv-open{overflow:hidden}
 /* a desktop screen, whole: inset on the app's own deep navy instead of cropped to the frame */
 /* Athleo: the screen in a glass frame (as on the case-study covers), on its own deep gradient; the trailer plays while in view */
 .side-ath{display:grid;place-items:center;container-type:inline-size;background:#1E234F url(assets/side/athleo-bg.webp) center / cover}
-.ath-rim{display:block;width:88cqw;padding:1.1cqw;box-sizing:border-box;border-radius:2.2cqw;background:rgba(255,255,255,.12);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.32),0 3cqw 8cqw rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.2);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+/* black glass, after iOS's dark materials: a smoky dark tint over a strong blur with the colour behind pushed up
+   (saturate), a faint sheen at the top, a hairline light edge, a darker lower lip, and a deep soft shadow */
+.ath-rim{display:block;width:88cqw;padding:1.1cqw;box-sizing:border-box;border-radius:2.2cqw;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0) 38%),rgba(10,10,18,.46);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px rgba(255,255,255,.07),inset 0 -1px 0 rgba(0,0,0,.45),
+    0 3cqw 8cqw rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .ath-rim video{display:block;width:100%;height:auto;border-radius:1.2cqw}
 .side-card:hover .ath-rim{transform:translateY(-1.5%)}
 .side-shot{display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 30%,#1E2A4A,#0B1426)}
@@ -712,7 +717,7 @@ html.gal-open{overflow:hidden}
         </div>
       </li>
       <li class="spot">
-        <div class="cover  grain story"><div class="frame on stat"><b>25%</b><span>more covered new patients made it to a first appointment</span></div><div class="frame"><div class="combo"><img style="--lq:url(data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADwAgCdASoUAAwAPu1iqU2ppaOiMAgBMB2JaQAAetCIAAD+8L0+rpl4IDSQUjft8pN5vj05T4QAAA==)" class="combo-web lq" src="assets/spotlight/payment-web.webp" alt="Onboarding's payment step on the web, with answers to common questions like why a card is needed if you're covered." width="1200" height="750" loading="lazy" decoding="async"><span class="phone"><img style="--lq:url(data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAADwBQCdASoUACwAPtVWok2oJKMiOrmYAQAaiWcA0nMuCYTy43HbIBXGJzClZOS0VWLDQNm/+NzAAAD+86Oi5hGnXneCLv3SrA0wVCs3UJqSsPmYMn8+hN4+MgBzCcdaKAKwyorly2inDcwh/1pdLKWz/wLSDLNWmNFERN4NmqVPL8yF1ibckWqMjfNGGWAReX/7YJuLRTCafgcT0gRs7MRJgqii2FV1JBlieEGd1q/IZHTw3oQxxXmJz16AAA==)" class="lq" src="assets/spotlight/payment-phone.webp" alt="The same step on the phone: a card or Apple Pay, and a note that the patient pays $0 today." width="464" height="1022" loading="lazy" decoding="async"></span></div></div><span class="marks" aria-hidden="true"><i class="on"></i><i></i></span><button class="st-nav st-prev" type="button" aria-label="Previous image"><svg class="ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polygon points="16,5 16,19 6,12" fill="currentColor"/></svg></button><button class="st-nav st-next" type="button" aria-label="Next image"><svg class="ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polygon points="8,5 8,19 18,12" fill="currentColor"/></svg></button><button class="spot-plus" type="button" aria-label="Open this story full screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5v-4h4M13.5 9.5v4h-4"/></svg></button></div>
+        <div class="cover  grain story"><div class="frame on stat"><b>25%</b><span>more covered new patients made it to a first appointment</span></div><div class="frame"><div class="pay"><span class="phone"><img style="--lq:url(data:image/webp;base64,UklGRjYBAABXRUJQVlA4ICoBAADQBgCdASoUACsAPu1usVKppiSipWmZMB2JQBcVkj60pCh2zfpFl0CeQ0FT9SWeILPcIh/urHv9ui0ksmVEejQA/kmyHl+AYi8p6zbaH9ZNXVnI2HkEfYP4LJNdF977UOdi+oxndynpxiiut3T46LCyIunwlqxezzdp3EsBo2ViLGorOjUx8aUIuMoyeA1G1q6TA9lmPsfey0R+bnBbn/YEf7UmuTBXTQdjmdpro3fRBnuisTp+JSkFYPFU5JajI0XvKLOxn4fg7cMSY5gDRVT2pL1TMe5ZW4vgAVynamGARERY7NSkMhfGeWmOaXdtlAXMjRkpnluU1tUMDmpdHoOSau4SYNBT7cLn4oXRZSpdtz30Qv5oHeqb/C4gWspT3xTnSZDpKGqEAAAA)" class="lq" src="assets/spotlight/payment-login.webp" alt="Signing up on the phone: one field for a phone number, over a photo of a patient." width="563" height="1218" loading="lazy" decoding="async"></span><span class="phone"><img style="--lq:url(data:image/webp;base64,UklGRtoAAABXRUJQVlA4IM4AAAAQBgCdASoUACsAPu1oq0+ppaOiKqoBMB2JQBgbgvv87R8CsO7euoGkfRlp+SO1DLKtLpX0DG5r58AA/t/Dg2NXBKbnbNG2rcAX40ELTz0+Y3Un4ot+hI27m37xnG5LquyuzQznKu5arRKzOgSpW531oN8AawrWCVkiUF8i+g7BVjGtmyPcpiaSS1GSUgm0VAOfoQXOGoVH05uzSv/oIThYFowvBzAD4yPW8T6e3AmsTQyq5cHqFHADDv6NTY3HLvrFFoCpU9BJG8nQA9gAAA==)" class="lq" src="assets/spotlight/payment-message.webp" alt="Before paying, the patient writes a first message to their dietitian, Jane, about what they hope to get from their sessions." width="563" height="1218" loading="lazy" decoding="async"></span><span class="phone"><img style="--lq:url(data:image/webp;base64,UklGRsgAAABXRUJQVlA4ILwAAADwBQCdASoUACwAPtVWok2oJKMiOrmYAQAaiWcA0nMuCYTy43HbIBXGJzClZOS0VWLDQNm/+NzAAAD+86Oi5hGnXneCLv3SrA0wVCs3UJqSsPmYMn8+hN4+MgBzCcdaKAKwyorly2inDcwh/1pdLKWz/wLSDLNWmNFERN4NmqVPL8yF1ibckWqMjfNGGWAReX/7YJuLRTCafgcT0gRs7MRJgqii2FV1JBlieEGd1q/IZHTw3oQxxXmJz16AAA==)" class="lq" src="assets/spotlight/payment-phone.webp" alt="The payment step on the phone: a card or Apple Pay, and a note that the patient pays $0 today." width="464" height="1022" loading="lazy" decoding="async"></span></div></div><span class="marks" aria-hidden="true"><i class="on"></i><i></i></span><button class="st-nav st-prev" type="button" aria-label="Previous image"><svg class="ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polygon points="16,5 16,19 6,12" fill="currentColor"/></svg></button><button class="st-nav st-next" type="button" aria-label="Next image"><svg class="ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polygon points="8,5 8,19 18,12" fill="currentColor"/></svg></button><button class="spot-plus" type="button" aria-label="Open this story full screen"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.5v-4h4M13.5 9.5v4h-4"/></svg></button></div>
         <div class="spot-text">
         <p class="spot-tag">Fay Nutrition<i class="dot"></i>iOS, Android, Web</p>
         <p class="spot-line">My onboarding redesign made one crucial change to the payment page, and 25% more covered new patients made it to their first visit.</p>
@@ -796,7 +801,7 @@ html.gal-open{overflow:hidden}
 
 <footer class="site-foot" id="contact">
   <div class="wrap grid">
-    <h2><span class="headshot"><img src="assets/headshot.webp" alt="Ling-Hsuan Wang" width="275" height="275" loading="lazy" decoding="async"></span><span>Let’s talk about your product.</span></h2>
+    <h2><span class="headshot"><img style="--lq:url(data:image/webp;base64,UklGRjQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSEgAAAABR0AmYJk0lwL6CSIiQjNPDdjEttWIYIISCahAAwKiBNrMEw6bt4/ov4Cg0AMzlJ0AkDTL2Ig+1qLBFQm/MHHF0Y2jQ3K/xgFWUDggxgAAALAFAJ0BKhQAFAA+7XCwUqmmJKKoCAEwHYlkAJ0y67hr7WEs1tDqps6gz+zjTiyOQsRFB9GlAAD+17ZH+LNbddTgh47xPCOUljQnjLU3f20Clftqn5mkm4eVWKZGdEANgzpWWvlUf34hfDmPbkvYTaFfvguAOtkvV7Jj2ZwqAnvXAgvadu5DM+LRHgAVzv3q+GmvSqsBf3M/9OL4mvRkvfAZvl2x+vkMHAqYfZhAkLjdXsy0fgZHmk+qkQYGUlOFDHb72QAAAA==)" class="lq" src="assets/headshot.webp" alt="Ling-Hsuan Wang" width="275" height="275" loading="lazy" decoding="async"></span><span>Let’s talk about your product.</span></h2>
     <p class="foot-note">I’m looking for my next Staff or Senior role on a team building care people can rely on. Always happy to talk about healthcare products, design, and creative practice.</p>
     <div class="contact">
       <p class="contact-links"><a class="addr" id="addr" href="mailto:linghsuanwang@gmail.com">linghsuanwang@gmail.com</a><i class="dot"></i><a href="https://www.linkedin.com/in/wendylingwang/" target="_blank" rel="noopener">LinkedIn</a></p>
