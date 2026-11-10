@@ -63,7 +63,7 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{background:var(--paper) var(--paper-grain);color:var(--ink);
+body{margin:0;background:var(--paper) var(--paper-grain);color:var(--ink);
   font-optical-sizing:auto;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3,p,dl,dd,ul,figure{margin:0}
 ul{padding:0;list-style:none}
@@ -115,7 +115,11 @@ p{text-wrap:pretty}
    The grid container itself is not positioned, so its children share the hero's stacking order with the canvas. */
 .hero{position:relative;isolation:isolate;overflow:hidden;
   /* the bottom edge is a shallow arc, lowest in the middle, leading the eye down into the preface */
-  --arc:clamp(28px, 5vw, 72px);border-radius:0 0 50% 50% / 0 0 var(--arc) var(--arc);display:flex;
+  /* drawn as one wide ellipse (75% of the width, so it meets the sides at a slant) rather than two squashed corners,
+     which bent sharply at the edges and ran flat across the middle */
+  --arc:clamp(28px, 5vw, 72px);--ry:calc(var(--arc) * 3.93);display:flex;
+  -webkit-mask:linear-gradient(#000 0 0) top / 100% calc(100% - var(--arc) + 1px) no-repeat,radial-gradient(ellipse 75% var(--ry) at 50% calc(100% - var(--ry)),#000 calc(100% - 1.5px),transparent 100%);
+  mask:linear-gradient(#000 0 0) top / 100% calc(100% - var(--arc) + 1px) no-repeat,radial-gradient(ellipse 75% var(--ry) at 50% calc(100% - var(--ry)),#000 calc(100% - 1.5px),transparent 100%);
   min-height:max(600px, min(100svh, 1000px));background:var(--w-base);
   --hz:84%}
 .world{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--w-base)}
@@ -127,7 +131,7 @@ p{text-wrap:pretty}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.4 0 0 0 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .stage3d{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0;display:block}
 
-.hero-grid{flex:1;width:100%;padding-block:var(--s-5) calc(var(--s-5) + var(--arc) * .6);grid-template-rows:auto 1fr auto auto var(--s-7) auto}
+.hero-grid{flex:1;width:100%;padding-block:var(--s-5) calc(var(--s-5) + var(--arc));grid-template-rows:auto 1fr auto auto var(--s-7) auto}
 .hero-grid > *{position:relative;z-index:3}
 .hero-grid > .headline{z-index:1}
 /* top bar: wordmark left, role line centred on the page, nav right (desktop). Phones: role line top right, nav moves to the bottom row. */
@@ -360,7 +364,7 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .spot .cover-plain{background:#DCDDFD}   /* research: one flat lilac, the same as the persona boards */
 .spot .cover-photo{background:#E9E6F3;--grain:0}   /* photos stay clean, no grain */
 .spot-tag{margin:var(--s-2) 0 0;color:var(--ink-2)}
-.spot-line{margin:0;text-wrap:pretty;max-width:22em;font-family:var(--display);font-weight:400;font-synthesis:none;font-size:calc(var(--fs-lead) * 1.08);line-height:1.25;letter-spacing:-.005em;color:var(--ink)}   /* a story's headline: serif, like the other titles */
+.spot-line{margin:0;text-wrap:pretty;max-width:30em;color:var(--ink-2)}   /* a story's line: body text, same as the Beyond healthcare lines */
 .spot-more{display:none}   /* the extra words live in the full-screen bubble */
 /* frames: one at a time, a slow cross-fade */
 .frame{position:absolute;inset:0;z-index:1;container-type:size;display:flex;align-items:center;justify-content:center;
@@ -436,6 +440,7 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
   background:rgba(255,255,255,.58) var(--paper-grain);-webkit-backdrop-filter:blur(22px) saturate(1.3);backdrop-filter:blur(22px) saturate(1.3);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.7),0 10px 30px rgba(0,0,0,.18)}   /* matte glass over the bottom of the picture */
 .sv-line{display:none}
+.sv-bubble[hidden]{display:none!important}
 .sv-bubble.min:not(.open){left:auto;right:var(--br,16px);width:auto;padding:9px 16px;border-radius:999px;cursor:pointer}
 .sv-bubble.min:not(.open) .sv-more{display:none}
 .sv-bubble.min:not(.open)::before{content:"About this story";font-size:var(--fs-label);letter-spacing:.08em;text-transform:uppercase;color:#2A2836}
@@ -461,7 +466,7 @@ html.sv-open{overflow:hidden}
 .side-card:hover .side-media video{transform:scale(1.02)}
 /* a desktop screen, whole: inset on the app's own deep navy instead of cropped to the frame */
 /* Athleo: the screen in a glass frame (as on the case-study covers), on its own deep gradient; the trailer plays while in view */
-.side-ath{display:grid;place-items:center;container-type:inline-size;background:#0B1426 url(assets/side/athleo-bg.webp) center / cover}
+.side-ath{display:grid;place-items:center;container-type:inline-size;background:#1E234F url(assets/side/athleo-bg.webp) center / cover}
 .ath-rim{display:block;width:88cqw;padding:1.1cqw;box-sizing:border-box;border-radius:2.2cqw;background:rgba(255,255,255,.12);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.32),0 3cqw 8cqw rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.2);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
@@ -484,8 +489,8 @@ html.sv-open{overflow:hidden}
 .arch-credit{font-size:var(--fs-small);color:var(--ink-2);opacity:.85;max-width:30em}
 .gal{position:fixed;inset:0;z-index:60;display:grid;grid-template-rows:1fr auto;gap:var(--s-4);padding:var(--s-8) var(--s-5) var(--s-5);background:rgba(14,12,24,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .gal[hidden]{display:none}
-.gal-stage{min-height:0;display:grid;place-items:center;touch-action:pan-y}
-.gal-stage img{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.gal-stage{position:relative;min-height:0;touch-action:pan-y}
+.gal-stage img{position:absolute;inset:0;margin:auto;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:clamp(14px, 1.7vw, 24px);box-shadow:0 12px 40px rgba(0,0,0,.35)}   /* pinned to the stage so it fits its height as well as its width, centred, and the caption stays in view */
 .gal-bar{display:flex;align-items:center;justify-content:center;gap:var(--s-4);color:#E7E4F1;font-size:var(--fs-small);text-align:center}
 .gal-cap{flex:0 1 46em}
 .gal-n{opacity:.7;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -511,7 +516,14 @@ html.gal-open{overflow:hidden}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .site-foot{background-color:#16216F;background-image:url(assets/world-dark.webp);--grain:.22} }
 :root[data-theme="dark"] .site-foot{background-color:#16216F;background-image:url(assets/world-dark.webp);--grain:.22}
 .site-foot .grid{row-gap:var(--s-7)}
-.site-foot h2{grid-column:1 / -1;}
+.site-foot h2{grid-column:1 / -1;display:flex;align-items:center;gap:clamp(16px, 2.4vw, 32px)}
+/* headshot beside the contact heading: Ling's own squircle cut-out, two lines tall, with the buttons' light-metal sheen
+   (masked to the photo's shape, so it follows her corners) moving as it scrolls up the screen */
+.headshot{position:relative;flex:none;width:2em;aspect-ratio:1;transform:rotate(-5deg);filter:drop-shadow(0 1px 2px rgba(23,21,31,.18)) drop-shadow(0 10px 18px rgba(93,89,160,.28))}
+.headshot img{display:block;width:100%;height:100%}
+.headshot::after{content:"";position:absolute;inset:0;pointer-events:none;-webkit-mask:url(assets/headshot.webp) center / 100% 100%;mask:url(assets/headshot.webp) center / 100% 100%;
+  background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.42) 50%,transparent 62%) var(--sx,35%) 0 / 300% 100% no-repeat,
+             linear-gradient(180deg,rgba(255,255,255,.16),transparent 45%,rgba(29,28,46,.1))}
 .foot-note{grid-column:1 / -1;margin:0;max-width:34em;font-size:var(--fs-small);line-height:1.55;color:var(--ink-2)}
 .contact{grid-column:1 / -1;display:flex;flex-direction:column;align-items:flex-start;gap:var(--s-4)}
 .contact-links{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) 0;font-size:var(--fs-body);line-height:1.4}
@@ -903,7 +915,7 @@ html.gal-open{overflow:hidden}
       <p class="cs-kicker">05<i class="dot"></i>Motion design</p>
       <div class="cs-text">
         <h2 id="s5">The loading moment sets the pace: small steps, over time</h2>
-        <div class="cs-body"><p>Just before this screen, a patient has named what they’ve been struggling with: emotional eating, gut health, an eating disorder, or the moment they finally decided to work on their weight. From research, we knew many had already tried a lot that didn’t work. So we designed the wait for that moment: calm, and building confidence, with “One small step today. A healthier you over time.” The next screen gives them small steps they can start right away.</p><p>Putting the goals together takes a moment, so we made the wait part of the message. I directed the animation with our Rive motion contractor Akash, and my design colleague Tori turned my direction into a storyboard spec. I then worked with our mobile engineers to build it into our onboarding.</p></div>
+        <div class="cs-body"><p>Just before this screen, a patient has named what they’ve been struggling with: emotional eating, gut health, an eating disorder, or the moment they finally decided to work on their weight. From my research, I knew many had already tried a lot that didn’t work. So we designed the wait for that moment: calm, and building confidence, with “One small step today. A healthier you over time.” The next screen gives them small steps they can start right away.</p><p>Putting the goals together takes a moment, so we made the wait part of the message. I directed the animation with our Rive motion contractor Akash, and my design colleague Tori turned my direction into a storyboard spec. I then worked with our mobile engineers to build it into our onboarding.</p></div>
       </div>
       <figure class="cs-fig"><div class="cs-before cs-lilac" role="group" aria-label="The loading animation in the app, with what the engineer who built it said"><div class="cb-phones"><span class="phone"><video class="onboard" src="assets/goals/onboarding.mp4" poster="assets/goals/onboarding-poster.webp" muted loop playsinline autoplay preload="auto"></video></span></div><figure class="cs-qcard bubble"><svg class="q-tail" viewBox="0 0 38 57" aria-hidden="true" focusable="false"><path d="M38 0 H37 C37 17.16 19.6 28.78 3.8 22.22 L2.02 21.48 C0.88 21 0.06 22.6 1.11 23.25 L27.54 39.63 C33.43 43.28 37 49.71 37 56.63 V57 H38 Z"/></svg><svg class="q-icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><filter id="ink" x="-6%" y="-6%" width="112%" height="112%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="0.55" xChannelSelector="R" yChannelSelector="G" result="edge"/><feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.8 2.6" result="speck"/><feComposite in="edge" in2="speck" operator="in"/></filter></defs><g filter="url(#ink)" fill="currentColor" stroke="none"><circle cx="24" cy="48" r="10"/><path d="M14.1 46.6 C14.4 33 20 24.4 31.2 19.6 L32.6 22.4 C25.4 26.4 21.6 32 21.4 40 Z"/><circle cx="54" cy="48" r="10"/><path d="M44.1 46.6 C44.4 33 50 24.4 61.2 19.6 L62.6 22.4 C55.4 26.4 51.6 32 51.4 40 Z"/></g></svg><blockquote><p>This is my favorite screen in our app.</p></blockquote><figcaption>Caleb<i class="dot"></i>Mobile engineer, on this screen he built</figcaption></figure></div><div class="cs-plain"><img style="--lq:url(data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAAEwAAAwAAQUxQSCIAAAABH6CQbQTI33Ieu0cjIuJHGGQbqfcndv5cDxHR/wgdzgsdVlA4IFIAAABwAwCdASoUAAQAPu1qrU8ppiQiMAgBMB2JYwAAW4zjuybGCCAA+wX+4n0igxLbm0joF2D4eHDg8bYmuOi58ZQQbfDXyJ88y1M6R4J4whFYoAAA)" class="lq" src="assets/goals/motion-storyboard.webp" alt="The storyboard, in two stages: the line draws in over 800 milliseconds, then a looping state for slow connections." width="3577" height="720" loading="lazy" decoding="async"></div><figcaption>The loading animation, and the storyboard behind it.</figcaption></figure>
     </section>
@@ -952,14 +964,14 @@ html.gal-open{overflow:hidden}
 
 <footer class="site-foot" id="contact">
   <div class="wrap grid">
-    <h2>Let’s talk about your product.</h2>
+    <h2><span class="headshot"><img style="--lq:url(data:image/webp;base64,UklGRjQBAABXRUJQVlA4WAoAAAAQAAAAEwAAEwAAQUxQSEgAAAABR0AmYJk0lwL6CSIiQjNPDdjEttWIYIISCahAAwKiBNrMEw6bt4/ov4Cg0AMzlJ0AkDTL2Ig+1qLBFQm/MHHF0Y2jQ3K/xgFWUDggxgAAALAFAJ0BKhQAFAA+7XCwUqmmJKKoCAEwHYlkAJ0y67hr7WEs1tDqps6gz+zjTiyOQsRFB9GlAAD+17ZH+LNbddTgh47xPCOUljQnjLU3f20Clftqn5mkm4eVWKZGdEANgzpWWvlUf34hfDmPbkvYTaFfvguAOtkvV7Jj2ZwqAnvXAgvadu5DM+LRHgAVzv3q+GmvSqsBf3M/9OL4mvRkvfAZvl2x+vkMHAqYfZhAkLjdXsy0fgZHmk+qkQYGUlOFDHb72QAAAA==)" class="lq" src="assets/headshot.webp" alt="Ling-Hsuan Wang" width="275" height="275" loading="lazy" decoding="async"></span><span>Let’s talk about your product.</span></h2>
     <p class="foot-note">I’m looking for my next Staff or Senior role on a team building care people can rely on. Always happy to talk about healthcare products, design, and creative practice.</p>
     <div class="contact">
       <p class="contact-links"><a class="addr" id="addr" href="mailto:linghsuanwang@gmail.com">linghsuanwang@gmail.com</a><i class="dot"></i><a href="https://www.linkedin.com/in/wendylingwang/" target="_blank" rel="noopener">LinkedIn</a></p>
     </div>
     <div class="foot-meta small">
       <span>© 2026 Ling-Hsuan Wang</span>
-      <button class="linkbtn" id="gridToggle" type="button" aria-pressed="false">Show grid</button>
+      <button class="linkbtn" id="gridToggle" type="button" aria-pressed="false" hidden>Show grid</button>
     </div>
   </div>
 </footer>
@@ -1041,6 +1053,7 @@ html.gal-open{overflow:hidden}
   // layout grid overlay: G key or footer toggle
   const ov = document.getElementById('overlay'), tg = document.getElementById('gridToggle');
   const setGrid = on => { ov.hidden = !on; tg.setAttribute('aria-pressed', on); tg.textContent = on ? 'Hide grid' : 'Show grid'; try{ localStorage.setItem('grid', on?'1':''); }catch(e){} };
+  if (tg.hidden) return;   // the grid tool is for the preview only; the published site leaves it off
   try { if (localStorage.getItem('grid')) setGrid(true); } catch(e){}
   tg.addEventListener('click', ()=>setGrid(ov.hidden));
   addEventListener('keydown', e=>{ if ((e.key==='g'||e.key==='G') && !e.metaKey && !e.ctrlKey && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) setGrid(ov.hidden); });
@@ -1056,7 +1069,7 @@ html.gal-open{overflow:hidden}
   });
   // buttons: the sheen moves as a button travels up the screen, follows the mouse, and leans with tilt where no permission is needed
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const btns = [...document.querySelectorAll('.pill,.btn,.cta')]; let tilt = 0, queued = false;
+  const btns = [...document.querySelectorAll('.pill,.btn,.cta,.headshot')]; let tilt = 0, queued = false;
   const paint = () => { queued = false; const h = innerHeight;
     btns.forEach(b => { if (b._hover) return; const r = b.getBoundingClientRect(); if (r.bottom < 0 || r.top > h) return;
       const p = Math.min(1, Math.max(0, r.top / h)); b.style.setProperty('--sx', (95 - p * 80 + tilt) + '%'); }); };
