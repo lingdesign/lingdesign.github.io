@@ -4,8 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Goals Redesign</title>
+<script id="theme-boot">(function(){var t;try{t=localStorage.getItem("theme")}catch(e){}if(!t){var m=location.search.match(/[?&]theme=(dark|light)/);if(m)t=m[1]}if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)})()</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Goals redesign: a case study by Ling-Hsuan Wang, lead designer.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..600;1,400..600&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap">
@@ -49,13 +53,15 @@
 @media (min-width:1024px){ :root{ --cols:12; --gutter:24px; --margin:48px } }
 @media (min-width:1440px){ :root{ --gutter:32px; --margin:64px } }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --paper:#1D1C2E; --ink:#E7E4F1; --ink-2:#A9A5B9; --sub:#C3CBF2; --cast-shadow:#0A1150; --line:#34324A; --accent:#AAAEFE; --tbd:#F0AF96;
+  --tg-track:rgba(255,255,255,.07); --tg-hi:rgba(255,255,255,.22); --tg-rim:rgba(255,255,255,.12); --tg-drop:rgba(0,0,0,.35); --tg-thumb:rgba(255,255,255,.2); --tg-thumb-hi:rgba(255,255,255,.45);
+    --paper:#1D1C2E; --ink:#E7E4F1; --ink-2:#A9A5B9; --sub:#C3CBF2; --cast-shadow:#0A1150; --line:#34324A; --accent:#AAAEFE; --tbd:#F0AF96;
   --frame-shadow:rgba(44,56,153,.55); --tint:rgba(231,228,241,.06); --btn-hi:rgba(255,255,255,.55); --btn-lo:rgba(29,28,46,.14); --btn-rim:rgba(255,255,255,.7); --btn-sheen:rgba(255,255,255,.75); --btn-drop:rgba(0,0,0,.45);   /* matte light metal */
   --paper-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   --w-base:#16216F; --w-1:#2E3A9E; --w-2:rgba(222,176,108,.30); --w-3:#3E3A78; --w-4:#141739; --w-5:#4B3F72; --w-glow:rgba(255,214,150,.14); --grain:.22;
   color-scheme:dark } }
 :root[data-theme="dark"]{
-  --paper:#1D1C2E; --ink:#E7E4F1; --ink-2:#A9A5B9; --sub:#C3CBF2; --cast-shadow:#0A1150; --line:#34324A; --accent:#AAAEFE; --tbd:#F0AF96;
+  --tg-track:rgba(255,255,255,.07); --tg-hi:rgba(255,255,255,.22); --tg-rim:rgba(255,255,255,.12); --tg-drop:rgba(0,0,0,.35); --tg-thumb:rgba(255,255,255,.2); --tg-thumb-hi:rgba(255,255,255,.45);
+    --paper:#1D1C2E; --ink:#E7E4F1; --ink-2:#A9A5B9; --sub:#C3CBF2; --cast-shadow:#0A1150; --line:#34324A; --accent:#AAAEFE; --tbd:#F0AF96;
   --frame-shadow:rgba(44,56,153,.55); --tint:rgba(231,228,241,.06); --btn-hi:rgba(255,255,255,.55); --btn-lo:rgba(29,28,46,.14); --btn-rim:rgba(255,255,255,.7); --btn-sheen:rgba(255,255,255,.75); --btn-drop:rgba(0,0,0,.45);   /* matte light metal */
   --paper-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   --w-base:#16216F; --w-1:#2E3A9E; --w-2:rgba(222,176,108,.30); --w-3:#3E3A78; --w-4:#141739; --w-5:#4B3F72; --w-glow:rgba(255,214,150,.14); --grain:.22;
@@ -106,7 +112,25 @@ p{text-wrap:pretty}
 .mark{display:block;text-decoration:none;color:var(--ink);line-height:0}
 .wordmark{height:44px;width:auto;display:block}
 @media (min-width:1024px){ .wordmark{height:56px} }
-.nav{display:flex;gap:var(--s-5)}
+.nav{display:flex;align-items:center;gap:var(--s-5)}
+/* light / dark switch, desktop only: liquid glass. A frosted track (blur + saturate, a bright top edge, a faint rim) with a
+   glass bead that springs across to the active side; sun and moon sit in the track. Follows the system until clicked,
+   then remembers the choice for every page */
+:root{--tg-track:rgba(255,255,255,.24); --tg-hi:rgba(255,255,255,.8); --tg-rim:rgba(255,255,255,.4); --tg-drop:rgba(70,60,150,.16); --tg-thumb:rgba(255,255,255,.78); --tg-thumb-hi:#fff}
+.theme-tg{position:relative;flex:none;width:64px;height:34px;padding:0;border:0;border-radius:999px;cursor:pointer;color:var(--ink-2);
+  background:var(--tg-track);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);
+  box-shadow:inset 0 1px 0 var(--tg-hi),inset 0 0 0 1px var(--tg-rim),inset 0 -1px 1px rgba(0,0,0,.04),0 4px 14px var(--tg-drop);
+  display:grid;grid-template-columns:1fr 1fr;place-items:center}
+.theme-tg svg{position:relative;z-index:1;width:15px;height:15px;transition:color .3s}
+.theme-tg .tg-bead{position:absolute;top:4px;left:4px;width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(120% 120% at 32% 22%,var(--tg-thumb-hi),var(--tg-thumb) 60%);
+  box-shadow:inset 0 1px 0 var(--tg-thumb-hi),inset 0 -1px 2px rgba(0,0,0,.08),0 1px 3px rgba(23,21,31,.2),0 4px 10px rgba(23,21,31,.12)}
+.theme-tg.ready .tg-bead{transition:transform .5s cubic-bezier(.3,1.45,.5,1)}
+.theme-tg[aria-pressed="true"] .tg-bead{transform:translateX(30px)}
+.theme-tg[aria-pressed="false"] .tg-sun,.theme-tg[aria-pressed="true"] .tg-moon{color:var(--ink)}
+.theme-tg:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (max-width:1023px){ .theme-tg{display:none} }
+@media (prefers-reduced-motion: reduce){ .theme-tg .tg-bead{transition:none!important} }
 .nav a{text-decoration:none;color:var(--ink-2)}
 .nav a:hover{color:var(--ink)}
 
@@ -129,7 +153,7 @@ p{text-wrap:pretty}
 .ground{top:calc(var(--hz, 84%) - 75%);height:150%}   /* 1.5 × hero tall; its midline (75% of the hero's height down) is the horizon */
 .world::after,.cover::after,.site-foot::after{content:"";position:absolute;inset:0;opacity:var(--grain);mix-blend-mode:screen;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.4 0 0 0 -1.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.stage3d{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0;display:block}
+.stage3d{position:absolute;inset:0;z-index:2;width:100%;height:100%;border:0;display:block;color-scheme:light dark}   /* the system's scheme, like the sculpture page inside, so a frame never paints an opaque backdrop when the visitor picks the other look */
 
 .hero-grid{flex:1;width:100%;padding-block:var(--s-5) calc(var(--s-5) + var(--arc));grid-template-rows:auto 1fr auto auto var(--s-7) auto}
 .hero-grid > *{position:relative;z-index:3}
@@ -378,11 +402,10 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
 .frame.stat b{font-family:var(--display);font-weight:400;font-size:36cqw;line-height:.9;letter-spacing:-.02em}
 .frame.stat span{font-size:clamp(14px, 5.2cqw, 20px);line-height:1.35;max-width:16em;text-wrap:balance}
 /* desktop and phone in one layout, the phone overlapping the corner */
-.combo{--cw:92cqw;position:relative;width:var(--cw);aspect-ratio:16 / 12}
-.combo-web{position:absolute;left:0;top:4%;width:86%;height:auto;border-radius:calc(var(--cw) * .02);
-  box-shadow:0 calc(var(--cw) * .03) calc(var(--cw) * .08) rgba(104,92,214,.22),0 2px 6px rgba(104,92,214,.08)}
-.combo .phone{--w:calc(var(--cw) * .27);position:absolute;right:0;bottom:0}
-.combo .phone img{aspect-ratio:auto}
+/* payment story: sign-up, a first message to the dietitian, then the redesigned payment step at the end */
+.pay{position:relative;width:100cqw;height:100cqh;container-type:size;display:flex;align-items:center;justify-content:center;gap:3cqw}
+.pay .phone{--w:min(28cqw, 38cqh)}
+.pay .phone img{aspect-ratio:464 / 1022;object-fit:cover}
 /* a photo placeholder until the photo arrives */
 .ph-photo{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s-2);width:100%;height:100%;text-align:center;padding:0 12%;box-sizing:border-box}
 /* frame marks: three small circles, one per frame; the current one is solid */
@@ -428,7 +451,9 @@ img.lq.landed{transition:filter .7s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
   height:min(100cqh, 125cqw);aspect-ratio:4 / 5;border-radius:20px;padding:0 6%;box-sizing:border-box;color:#E7E4F1;background:#3B58BE url(assets/spotlight/stat-bg.webp) center / cover}
 .sv-stage .stat b{font-family:var(--display);font-weight:400;font-size:min(30cqh, 38cqw);line-height:.9}
 .sv-stage .stat span{font-size:var(--fs-lead);line-height:1.35;max-width:14em}
-.sv-stage .combo{--cw:min(100cqw, 133cqh)}
+.sv-stage .pay{width:var(--pw, min(100cqw, 133cqh));height:auto;aspect-ratio:4 / 3;border-radius:12px;background:#E7E4FA url(assets/goals/cover-bg.webp) center / cover}
+.sv-stage .pay{container-type:normal;--pw:min(100cqw, 133cqh)}   /* sized from the viewer's stage, three phones across */
+.sv-stage .pay .phone{--w:calc(var(--pw) * .27)}
 .sv-stage .phone{--w:min(46cqw, 44cqh)}
 .sv-stage .ph-photo{width:min(100cqw, 80cqh);height:auto;aspect-ratio:4 / 5;border-radius:20px;background:#E9E6F3;color:#17151F}
 .sv-nav{position:absolute;top:50%;z-index:2;width:48px;height:48px;margin-top:-24px;border-radius:50%;border:0;cursor:pointer;
@@ -467,9 +492,13 @@ html.sv-open{overflow:hidden}
 /* a desktop screen, whole: inset on the app's own deep navy instead of cropped to the frame */
 /* Athleo: the screen in a glass frame (as on the case-study covers), on its own deep gradient; the trailer plays while in view */
 .side-ath{display:grid;place-items:center;container-type:inline-size;background:#1E234F url(assets/side/athleo-bg.webp) center / cover}
-.ath-rim{display:block;width:88cqw;padding:1.1cqw;box-sizing:border-box;border-radius:2.2cqw;background:rgba(255,255,255,.12);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.32),0 3cqw 8cqw rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.2);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+/* black glass, after iOS's dark materials: a smoky dark tint over a strong blur with the colour behind pushed up
+   (saturate), a faint sheen at the top, a hairline light edge, a darker lower lip, and a deep soft shadow */
+.ath-rim{display:block;width:88cqw;padding:1.1cqw;box-sizing:border-box;border-radius:2.2cqw;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0) 38%),rgba(10,10,18,.46);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 0 1px rgba(255,255,255,.07),inset 0 -1px 0 rgba(0,0,0,.45),
+    0 3cqw 8cqw rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.3);transition:transform .6s cubic-bezier(.2,.7,.2,1)}
 .ath-rim video{display:block;width:100%;height:auto;border-radius:1.2cqw}
 .side-card:hover .ath-rim{transform:translateY(-1.5%)}
 .side-shot{display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 30%,#1E2A4A,#0B1426)}
@@ -844,6 +873,7 @@ html.gal-open{overflow:hidden}
     <a href="./#work">Work</a>
     <a href="./#about">About</a>
     <a href="#contact">Contact</a>
+    <button class="theme-tg" type="button" aria-pressed="false" aria-label="Switch to dark mode"><span class="tg-bead" aria-hidden="true"></span><svg class="tg-sun" viewBox="0 0 16 16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M1.5 8h1.3M13.2 8h1.3M3.4 3.4l.9.9M11.7 11.7l.9.9M3.4 12.6l.9-.9M11.7 4.3l.9-.9"/></svg><svg class="tg-moon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.6 10.4A6 6 0 0 1 5.6 2.4a6 6 0 1 0 8 8z"/></svg></button>
   </nav>
 </header>
 
@@ -1082,6 +1112,23 @@ html.gal-open{overflow:hidden}
   });
   if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== 'function')
     addEventListener('deviceorientation', e => { if (e.gamma == null) return; tilt = Math.max(-25, Math.min(25, e.gamma)) * .8; q(); });
+})();
+(() => {
+  // light / dark switch: follows the system until clicked, then remembers the choice (theme-boot in the head applies it before paint)
+  const root = document.documentElement, mq = matchMedia('(prefers-color-scheme: dark)'), tgs = [...document.querySelectorAll('.theme-tg')];
+  if (!tgs.length) return;
+  const now = () => root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light');
+  const sync = () => tgs.forEach(b => { const d = now() === 'dark'; b.setAttribute('aria-pressed', d); b.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); });
+  sync(); requestAnimationFrame(() => tgs.forEach(b => b.classList.add('ready')));
+  tgs.forEach(b => b.addEventListener('click', () => { const t = now() === 'dark' ? 'light' : 'dark'; root.setAttribute('data-theme', t);
+    try { localStorage.setItem('theme', t); } catch (e) {} sync(); }));
+  mq.addEventListener('change', sync);
+  // where the browser keeps no storage (private windows, some embeds), carry the choice to the next page in its link
+  let stored = false; try { localStorage.setItem('theme-test', '1'); localStorage.removeItem('theme-test'); stored = true; } catch (e) {}
+  if (!stored) document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[href]'), t = root.getAttribute('data-theme');
+    if (!a || !t) return; const u = new URL(a.href, location.href);
+    if (u.origin !== location.origin || (u.pathname === location.pathname && u.hash)) return;
+    u.searchParams.set('theme', t); a.href = u.href; }, true);
 })();
 /* shared:end */
 (()=>{

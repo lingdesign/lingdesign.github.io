@@ -1487,7 +1487,8 @@ function showCurated(i){
   Object.assign(S, JSON.parse(JSON.stringify(c.s)), keep);
   show(c.seed, true); setTimeout(nudge, 60);
 }
-document.documentElement.style.colorScheme = S.backdrop==='night' ? 'dark' : 'light';
+// colour scheme: left to this page's CSS, which follows the system, as the <iframe> on the page does (color-scheme: light dark),
+// so the two always agree and the frame stays transparent whichever look the visitor picks on the page
 let PAUSED = false;
 addEventListener('message', e=>{
   if (e.origin !== location.origin) return;
@@ -1510,7 +1511,6 @@ addEventListener('message', e=>{
   else if (d.type==='theme'){
     const k = d.dark ? 'night' : 'haze';
     if (d.shadow) SHADOW[k] = d.shadow;
-    document.documentElement.style.colorScheme = d.dark ? 'dark' : 'light';
     if (S.backdrop !== k){ S.backdrop = k; } applyBackdrop();
   }
 });
