@@ -701,7 +701,7 @@ html.gal-open{overflow:hidden}
         <div class="spot-text">
         <p class="spot-tag">Fay Nutrition<i class="dot"></i>Research and AI tools</p>
         <p class="spot-line">I built Fay’s research practice from zero. Now any team can ask AI about patient pain points, and what drives acquisition and retention.</p>
-        <div class="spot-more"><p>Fay had no research practice. I set one up: recruiting, patient interviews, the first patient journeys, from finding Fay to staying in care, and insights that shaped acquisition and retention strategy. Then I put the findings where teams already work, in Claude, ChatGPT and our Notion feedback tracker, so anyone can ask what patients said.</p></div>
+        <div class="spot-more"><p>Fay had no research practice. I set one up: recruiting, patient interviews, the first patient journeys, from finding Fay to staying in care, and insights that shaped acquisition and retention strategy. Then I put the findings where teams already work, in Claude, ChatGPT and our Notion feedback tracker.</p></div>
         </div>
       </li>
       <li class="spot">
@@ -1050,7 +1050,7 @@ html.gal-open{overflow:hidden}
       row.scrollTo({ left: to.offsetLeft - row.offsetLeft - parseFloat(getComputedStyle(row).paddingLeft || 0), behavior: still ? 'auto' : 'smooth' });
       if (to._s) to._s.show(d > 0 ? 0 : to._s.frames.length - 1); };
     if (next) next.addEventListener('click', e => { e.stopPropagation(); st.i === frames.length - 1 ? go(1) : st.show(st.i + 1); });
-    cover.addEventListener('click', () => openSV(cards.indexOf(li), st.i));
+    cover.addEventListener('click', () => openSV(cards.indexOf(li), 0));   // always from the story's first picture, whatever the hover was showing
     li.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' && frames.length > 1 && !still) st.show(st.i + 1); });   // hover: the next image, at once
     return st;
   };
@@ -1093,6 +1093,7 @@ html.gal-open{overflow:hidden}
   };
   function openSV(i, f) {
     opener = document.activeElement; cur = i; fr = f || 0; render();
+    sv.querySelector('.sv-bubble').classList.add('open');   // opens with the story's words in full
     sv.hidden = false; document.documentElement.classList.add('sv-open'); svClose.focus();
   }
   const closeSV = () => { sv.hidden = true; document.documentElement.classList.remove('sv-open'); stage.innerHTML = ''; if (opener && opener.focus) opener.focus(); };
