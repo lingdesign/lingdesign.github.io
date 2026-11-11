@@ -821,9 +821,10 @@ html.gal-open{overflow:hidden}
 .tbl-ic{width:32px;height:32px;flex:none;color:var(--ink)}   /* from the interface marks: Data and Poise */
 .td-ship{position:relative}
 .td-note{margin:var(--s-4) 0 0;max-width:22em;font-size:var(--fs-small);line-height:1.45;color:var(--ink-2)}
-.td-note b{display:block;font-weight:600;color:#1F6B3A}
-@media (min-width:1024px){ .td-note{position:absolute;right:var(--s-5);bottom:16%;margin:0;max-width:13em;padding:var(--s-3) var(--s-4);border-radius:14px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 20px rgba(40,60,120,.14)}
-  .td-note::before{content:"";position:absolute;right:100%;top:50%;width:var(--s-6);border-top:1.5px dashed #2E8A55} }
+.td-note b{display:block;font-weight:600;color:var(--ink)}
+@media (min-width:1024px){ .td-note{position:absolute;right:var(--s-5);bottom:16%;margin:0;max-width:13em;padding:var(--s-3) var(--s-4);border-radius:14px;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 20px rgba(40,60,120,.14);color:#5D5970}
+  .td-note b{color:#17151F}   /* on its own white card, so the light-mode inks in both modes */
+  .td-note::before{content:"";position:absolute;right:100%;top:50%;width:var(--s-6);border-top:1.5px dashed var(--accent)} }
 .td-vid{padding:var(--s-5)}
 .td-vid video{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 1px 2px rgba(23,21,31,.06),0 10px 26px rgba(40,60,120,.18)}
 .fs-card{display:block;width:min(100%, 460px);flex:0 1 460px}   /* the card carries its own soft shadow */
@@ -832,7 +833,7 @@ html.gal-open{overflow:hidden}
 .it-map.lq,.fs-card img.lq{background:none!important}   /* cut-outs: no blurred loading preview behind their transparent parts */
 .it-key{margin:var(--s-4) 0 0;padding:0;list-style:none;counter-reset:k;display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-5);font-size:var(--fs-small);color:#5D5970}
 .it-key li{counter-increment:k;display:flex;align-items:center;gap:.5em}
-.it-key li::before{content:counter(k);display:inline-grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#699FCB;color:#fff;font-size:.85em;font-weight:600}
+.it-key li::before{content:counter(k);display:inline-grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#6F72D9;color:#fff;font-size:.85em;font-weight:600}
 .it{margin:0;display:flex;flex-direction:column;gap:var(--s-3)}
 .cs-gap{height:var(--s-5)}
 .st-pair{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s-5)}
@@ -1001,7 +1002,7 @@ html.gal-open{overflow:hidden}
         <h2 id="s6">I lobbied for a To-dos center, not one more to-do</h2>
         <div class="cs-body"><p>One to-do would have been the first of many: a license project had asked for a one-time modal, and expiring insurance needed a reminder too. So I lobbied to build To-dos as a whole, with a definition backed by the data. A to-do is required, with a deadline that affects care or claims, like a chart note before it locks, license details before removal or expiring insurance; it’s orange. An opportunity is a helpful next step that can wait or be dismissed, like following up with a client; it’s green.</p><p>Then I explored where they should live: as a page in the sidebar, as a line beside the bell, and right under the practice metric an opportunity could improve, like a follow-up beside client return rate.</p></div>
       </div>
-      <figure class="cs-fig"><div class="cs-before it-panel" role="group" aria-label="Where I explored placing to-dos and opportunities, magnified on the provider home: 1, a To do page in the sidebar; 2, a one-line to-do summary beside the bell; 3, opportunities right under the practice metrics they could improve."><p class="cb-tag">Iterations<i class="dot"></i>Where it lives</p><img style="--lq:url(data:image/webp;base64,UklGRjABAABXRUJQVlA4WAoAAAAQAAAAEwAADAAAQUxQSKEAAAANgFtt2/Lkfr64JwsknVaGU7OAb2EDcRiAv6ejpGcAOip3h+/BWSEiJgAIBkRjJ1qY63UgApjL3owFIezJ5aRuARwdh3ddL74LcvOIX0XqACmEi6L1LYD1Vn6N0bf1FH+OVvLuF/QnmfaA/75CgOifUiDXdtcu108q2/rpx9T48Hn/9LbZsAD3ixbcVUgpLlxigKQlRPmGdyO+y1sXBr1kAQBWUDggaAAAAFADAJ0BKhQADQA+7WSpTamlo6IwCAEwHYllYOsANzXbzjXAAP7wfJwLzfcz8jvf5SlEleEEN51f9ULBhro4FIRIkCmbsGYG7X/TgwSdVHz/6gYqstbcfI5KKShHIbehYUYvHNCAUgAA)" class="it-map lq" src="assets/provider/it-map.webp" alt="" width="2400" height="1589" loading="lazy" decoding="async"><ol class="it-key"><li>A To do page in the sidebar</li><li>A one-line summary beside the bell</li><li>Opportunities under the metric they could improve</li></ol></div><figcaption>Three places I explored, magnified on the provider home.</figcaption></figure>
+      <figure class="cs-fig"><div class="cs-before it-panel" role="group" aria-label="Where I explored placing to-dos and opportunities, magnified on the provider home: 1, a To do page in the sidebar; 2, a one-line to-do summary beside the bell; 3, opportunities right under the practice metrics they could improve."><p class="cb-tag">Iterations<i class="dot"></i>Where it lives</p><img style="--lq:url(data:image/webp;base64,UklGRjYBAABXRUJQVlA4WAoAAAAQAAAAEwAADAAAQUxQSKEAAAANgFtt2/Lkfr64JwsknVaGU7OAb2EDcRiAv6ejpGcAOip3h+/BWSEiJgAIBkRjJ1qY63UgApjL3owFIezJ5aRuARwdh3ddL74LcvOIX0XqACmEi6L1LYD1Vn6N0bf1FH+OVvLuF/QnmfaA/75CgOifUiDXdtcu108q2/rpx9T48Hn/9LbZsAD3ixbcVUgpLlxigKQlRPmGdyO+y1sXBr1kAQBWUDggbgAAALADAJ0BKhQADQA+7WKqTamlpCIwCAEwHYllAMcF+qBQhNTN4qoAAP7wY9cHo68LXLF7pUTXEQwFe4v5EBgwN9b7QDbfICpXnxDl3Y5gbzR4cHKjzet/zgKZUj2ZUl9JFoT12UP5DZLTGyV0AAAA)" class="it-map lq" src="assets/provider/it-map.webp" alt="" width="2400" height="1589" loading="lazy" decoding="async"><ol class="it-key"><li>A To do page in the sidebar</li><li>A one-line summary beside the bell</li><li>Opportunities under the metric they could improve</li></ol></div><figcaption>Three places I explored, magnified on the provider home.</figcaption></figure>
     </section>
     <section class="cs-sec grid" aria-labelledby="s7">
       <p class="cs-kicker">07<i class="dot"></i>What shipped</p>
