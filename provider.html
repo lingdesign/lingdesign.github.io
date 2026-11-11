@@ -818,13 +818,13 @@ html.gal-open{overflow:hidden}
 @media (max-width:639px){ .cs-dec thead{display:none} .cs-dec table,.cs-dec tbody,.cs-dec tr,.cs-dec th,.cs-dec td{display:block}
   .cs-dec tr{padding:var(--s-4) var(--s-5);border-top:1px solid var(--line)} .cs-dec th,.cs-dec td{padding:0;border:0}
   .cs-dec tbody th{font-size:var(--fs-caps);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin-bottom:.4em}
-  .cs-dec td:nth-child(2){margin-bottom:.3em} .cs-dec td:nth-child(3){color:var(--ink-2)} .cs-tbl caption .tbl-cap{align-items:flex-start} }
+  .cs-dec td:nth-child(2){margin-bottom:.3em} .cs-dec td:nth-child(3){color:var(--ink-2)} .cs-dec caption{display:block;padding:var(--s-4) var(--s-5) var(--s-3)} .cs-tbl caption .tbl-cap{align-items:center} }
 .fs-panel{display:flex;flex-direction:column}
 .fs-row{display:flex;flex-direction:column;align-items:center;gap:var(--s-5);padding-block:var(--s-5)}
 .fs-row .cs-qcard.bubble{flex:0 0 auto;width:100%}   /* in a column the bubble keeps its own height */
 @media (min-width:760px){ .fs-row{flex-direction:row;justify-content:center} .fs-card{flex:0 1 460px} .fs-row .cs-qcard.bubble{flex:0 1 300px;width:auto} }
 .tbl-cap{display:flex;align-items:center;gap:.6em}
-.tbl-ic{width:32px;height:32px;flex:none;color:var(--ink)}   /* from the interface marks: Data and Poise */
+.tbl-ic{width:32px;height:32px;flex:none;margin-left:-6px;color:var(--ink)}   /* the marks sit inside a 24-unit box; pull them in line with the text below */   /* from the interface marks: Data and Poise */
 .td-ship{position:relative}
 .td-note{margin:var(--s-4) 0 0;max-width:22em;font-size:var(--fs-small);line-height:1.45;color:var(--ink-2)}
 .td-note b{display:block;font-weight:600;color:var(--ink)}
@@ -995,7 +995,7 @@ html.gal-open{overflow:hidden}
 <tr><th scope="row">75th percentile</th><td>14</td><td>3</td></tr>
 <tr><th scope="row">90th percentile</th><td>19</td><td>8</td></tr>
 <tr><th scope="row">Most</th><td><b>36</b></td><td>54</td></tr></tbody></table></div><figcaption>Clients who had at least one appointment and hadn’t booked again, counted per provider.</figcaption></figure></div><p>Among our 150 busiest providers, the median would see 7 at any given time, and the busiest 36: enough to bury the chart notes and license deadlines that can’t wait. I called the PM with the numbers, and we agreed the logic had to change.</p><p>So I defined the follow-up around what the data said brings clients back. Clients who reach more visits in their first 30 days are far more likely to still be active at 3 months, so the opportunity builds that early habit, rather than chasing every client who went quiet.</p><div class="cs-inline"><figure class="cs-fig"><div class="cs-tbl cs-dec" role="group" aria-label="The decisions behind the follow-up opportunity"><table>
-<caption><span class="tbl-cap"><svg class="tbl-ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><polygon points="7,22 17,22 12,14.5"/><circle cx="12" cy="8.5" r="5"/></g></svg>How I defined the follow-up opportunity</span></caption>
+<caption><span class="tbl-cap"><svg class="tbl-ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><polygon points="7,22 17,22 12,14.5"/><circle cx="12" cy="8.5" r="5"/></g></svg>How I defined the follow‑up opportunity</span></caption>
 <thead><tr><th scope="col">Question</th><th scope="col">What we chose</th><th scope="col">Why</th></tr></thead>
 <tbody><tr><th scope="row">What drives retention?</th><td>Build the early-visit habit</td><td>Clients who come back more often in their first 30 days are far more likely to still be active at 3 months</td></tr>
 <tr><th scope="row">When to send it?</th><td>At least 7 days after the last visit</td><td>Chart notes, and the recap that goes out with them, are essentially all signed within 48 hours. Three days would land the visit, the recap and the nudge back to back</td></tr></tbody></table></div><figcaption>The decisions behind the follow-up, each made from our data. Exact figures omitted for confidentiality.</figcaption></figure></div><p>One idea looked free: we already had ratings, so why not nudge providers about clients who left 5 stars?</p></div>

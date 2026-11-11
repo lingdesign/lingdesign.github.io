@@ -818,13 +818,13 @@ html.gal-open{overflow:hidden}
 @media (max-width:639px){ .cs-dec thead{display:none} .cs-dec table,.cs-dec tbody,.cs-dec tr,.cs-dec th,.cs-dec td{display:block}
   .cs-dec tr{padding:var(--s-4) var(--s-5);border-top:1px solid var(--line)} .cs-dec th,.cs-dec td{padding:0;border:0}
   .cs-dec tbody th{font-size:var(--fs-caps);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin-bottom:.4em}
-  .cs-dec td:nth-child(2){margin-bottom:.3em} .cs-dec td:nth-child(3){color:var(--ink-2)} .cs-tbl caption .tbl-cap{align-items:flex-start} }
+  .cs-dec td:nth-child(2){margin-bottom:.3em} .cs-dec td:nth-child(3){color:var(--ink-2)} .cs-dec caption{display:block;padding:var(--s-4) var(--s-5) var(--s-3)} .cs-tbl caption .tbl-cap{align-items:center} }
 .fs-panel{display:flex;flex-direction:column}
 .fs-row{display:flex;flex-direction:column;align-items:center;gap:var(--s-5);padding-block:var(--s-5)}
 .fs-row .cs-qcard.bubble{flex:0 0 auto;width:100%}   /* in a column the bubble keeps its own height */
 @media (min-width:760px){ .fs-row{flex-direction:row;justify-content:center} .fs-card{flex:0 1 460px} .fs-row .cs-qcard.bubble{flex:0 1 300px;width:auto} }
 .tbl-cap{display:flex;align-items:center;gap:.6em}
-.tbl-ic{width:32px;height:32px;flex:none;color:var(--ink)}   /* from the interface marks: Data and Poise */
+.tbl-ic{width:32px;height:32px;flex:none;margin-left:-6px;color:var(--ink)}   /* the marks sit inside a 24-unit box; pull them in line with the text below */   /* from the interface marks: Data and Poise */
 .td-ship{position:relative}
 .td-note{margin:var(--s-4) 0 0;max-width:22em;font-size:var(--fs-small);line-height:1.45;color:var(--ink-2)}
 .td-note b{display:block;font-weight:600;color:var(--ink)}
