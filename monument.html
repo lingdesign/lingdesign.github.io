@@ -813,10 +813,16 @@ html.gal-open{overflow:hidden}
 .cs-tbl tbody th{font-weight:500}
 .cs-tbl td b{font-weight:600;color:var(--accent)}
 .cs-tbl:not(.cs-dec) td{font-variant-numeric:tabular-nums}
-.cs-dec table{min-width:560px} .cs-dec td:nth-child(2){font-weight:500}
+.cs-dec td:nth-child(2){font-weight:500}
+/* phones: each decision becomes its own block (question, choice, why) instead of three squeezed columns */
+@media (max-width:639px){ .cs-dec thead{display:none} .cs-dec table,.cs-dec tbody,.cs-dec tr,.cs-dec th,.cs-dec td{display:block}
+  .cs-dec tr{padding:var(--s-4) var(--s-5);border-top:1px solid var(--line)} .cs-dec th,.cs-dec td{padding:0;border:0}
+  .cs-dec tbody th{font-size:var(--fs-caps);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:500;margin-bottom:.4em}
+  .cs-dec td:nth-child(2){margin-bottom:.3em} .cs-dec td:nth-child(3){color:var(--ink-2)} .cs-tbl caption .tbl-cap{align-items:flex-start} }
 .fs-panel{display:flex;flex-direction:column}
 .fs-row{display:flex;flex-direction:column;align-items:center;gap:var(--s-5);padding-block:var(--s-5)}
-@media (min-width:760px){ .fs-row{flex-direction:row;justify-content:center} .fs-row .cs-qcard.bubble{flex:0 1 300px;width:auto} }
+.fs-row .cs-qcard.bubble{flex:0 0 auto;width:100%}   /* in a column the bubble keeps its own height */
+@media (min-width:760px){ .fs-row{flex-direction:row;justify-content:center} .fs-card{flex:0 1 460px} .fs-row .cs-qcard.bubble{flex:0 1 300px;width:auto} }
 .tbl-cap{display:flex;align-items:center;gap:.6em}
 .tbl-ic{width:32px;height:32px;flex:none;color:var(--ink)}   /* from the interface marks: Data and Poise */
 .td-ship{position:relative}
@@ -827,7 +833,7 @@ html.gal-open{overflow:hidden}
   .td-note::before{content:"";position:absolute;right:100%;top:50%;width:var(--s-6);border-top:1.5px dashed var(--accent)} }
 .td-vid{padding:var(--s-5)}
 .td-vid video{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 1px 2px rgba(23,21,31,.06),0 10px 26px rgba(40,60,120,.18)}
-.fs-card{display:block;width:min(100%, 460px);flex:0 1 460px}   /* the card carries its own soft shadow */
+.fs-card{display:block;width:min(100%, 460px);flex:none}   /* the card carries its own soft shadow */
 .fs-card img{display:block;width:100%;height:auto}
 .it-map{display:block;width:100%;height:auto;margin-top:var(--s-4)}
 .it-map.lq,.fs-card img.lq{background:none!important}   /* cut-outs: no blurred loading preview behind their transparent parts */
